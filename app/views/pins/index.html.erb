@@ -8,6 +8,21 @@
         <% if pin.user == current_user %>
         <br/>  <%= link_to 'Edit', edit_pin_path(pin) %> |
           <%= link_to 'Destroy', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %> |
+        <% if pin.for_sale? %>
+        Buy
+                  <%= form_tag charges_path do %>
+                  <article>
+                    <label class="amount">
+                      <span>Amount: $5.00</span>
+                    </label>
+                  </article>
+                  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                          data-description="A month's subscription"
+                          data-amount="500"
+                          data-locale="auto"></script>
+                  <% end %>
         <% end %>
       </div>
     </div>

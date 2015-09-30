@@ -22,7 +22,7 @@
                       token: function(token, arg) {
                         document.getElementById("stripeToken").value= token.id;
                         document.getElementById("stripeEmail").value= token.email;
-                        document.getElementById("chargeForm").value.submit();
+                        document.getElementById("chargeForm").submit();
                       }
                     });
                     document.getElementById('btn-buy').addEventListener('click', function(e){

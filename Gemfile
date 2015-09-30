@@ -29,9 +29,11 @@ gem 'paperclip', '~> 4.2'
 
 gem 'aws-sdk', '< 2.0'
 
-  gem 'jquery-turbolinks'
+gem 'jquery-turbolinks'
 
-  gem 'masonry-rails', '~> 0.2.0'
+gem 'masonry-rails', '~> 0.2.0'
+
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 
 group :development, :test do

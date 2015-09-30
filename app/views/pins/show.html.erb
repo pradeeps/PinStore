@@ -9,7 +9,9 @@
       <div class="panel-body">
         <p><%= @pin.description %></p>
         <p><strong><%= @pin.user.name if @pin.user %></strong></p>
-
+        <% if @pin.for_sale? %>
+        <strong>This Item is for sale.<strong/>
+        <% end %>
         <% if @pin.user == current_user %>
          <%= link_to 'Edit', edit_pin_path(@pin) %>
         <% end %>

@@ -11,11 +11,12 @@
           <% end %> <!-- check current user loop end-->
 
         <% if pin.for_sale? && user_signed_in? %> <!-- for sale check loop start -->
-      |  <button id='<%= "btn-buy-" + pin.id.to_s %>' type='button' class="btn btn-success btn-sm">Buy</button>
             <%= form_tag charges_path, id:'chargeForm' do %> <!-- chargeForm start -->
+            |  <button id='<%= "btn-buy-" + pin.id.to_s %>' type='button' class="btn btn-success btn-sm">Buy</button>
+
               <%= hidden_field_tag 'stripeToken' %>
               <%= hidden_field_tag 'stripeEmail' %>
-              <%= hidden_field_tag 'price'+pin.id.to_s, pin.price.to_i %>
+              <%= hidden_field_tag 'price', pin.price.to_i %>
               <!-- <a href="#" id='btn-buy'><strong>Buy This!</strong></a> -->
                 <script>
                 var handler = StripeCheckout.configure({
@@ -24,13 +25,14 @@
                     document.getElementById("stripeToken").value= token.id;
                     document.getElementById("stripeEmail").value= token.email;
                     document.getElementById("chargeForm").submit();
+                    alert(token.id)
                   }
                 });
                 document.getElementById('<%= "btn-buy-" + pin.id.to_s %>').addEventListener('click', function(e){
                   handler.open({
                     name: '<%= pin.description %>',
                     description: '<%= pin.description %>' ,
-                    amount: document.getElementById('<%= "price"+pin.id.to_s %>').value
+                    amount: document.getElementById("price").value
                   });
                   e.preventDefault();
                 })

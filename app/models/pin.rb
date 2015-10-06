@@ -6,4 +6,10 @@ class Pin < ActiveRecord::Base
 
   validates :image, presence: true
   validates :description, presence: true
+  before_save :price_adjustment_for_stripe
+
+  def price_adjustment_for_stripe
+    self.price = (self.price * 100).to_i
+  end
+
 end

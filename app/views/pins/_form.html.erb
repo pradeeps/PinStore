@@ -24,6 +24,11 @@
     <%= f.label :for_sale %>
     <%= f.check_box :for_sale, class: "form-control" %>
   </div>
+  <div class="form-group">
+    <%= f.label :price %> in £
+    <%= f.text_field :price, class: "form-control" %>
+  </div>
+
 
   <div class="form-group">
     <%= f.submit class: "btn btn-primary" %>

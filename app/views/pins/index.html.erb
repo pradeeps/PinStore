@@ -1,42 +1,45 @@
 <div id="pins" class="transitions-enabled">
-  <% @pins.each do |pin| %>
+  <% @pins.each do |pin| %> <!-- pins loop start-->
     <div class="box panel panel-default">
       <%= link_to image_tag(pin.image.url(:medium)), pin %>
       <div class="panel-body">
         <%= pin.description %><br/>
         <strong><%= pin.user.name if pin.user %></strong>
-        <% if pin.user == current_user %>
-        <br/>  <%= link_to 'Edit', edit_pin_path(pin) %> |
-          <%= link_to 'Destroy', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% end %> |
-        <% if pin.for_sale? %>
-                  <%= form_tag charges_path, id:'chargeForm' do %>
-                  <script src="https://checkout.stripe.com/checkout.js"></script>
-                  <%= hidden_field_tag 'stripeToken' %>
-                  <%= hidden_field_tag 'stripeEmail' %>
-                  <button id='btn-buy' type='button' class="btn btn-success btn-lg btn-block">
-                    <span class="glyphicon glyphicon-ok"></span>Buy</button>
-                    <script>
-                    var handler = StripeCheckout.configure({
-                      key: '<%= Rails.configuration.stripe[:publishable_key] %>',
-                      token: function(token, arg) {
-                        document.getElementById("stripeToken").value= token.id;
-                        document.getElementById("stripeEmail").value= token.email;
-                        document.getElementById("chargeForm").submit();
-                      }
-                    });
-                    document.getElementById('btn-buy').addEventListener('click', function(e){
-                      handler.open({
-                        name: 'Wooden Chair',
-                        description: 'Vintage Wooden Chair ($5.00)',
-                        amount: 499
-                      });
-                      e.preventDefault();
-                    })
-                    </script>
-                  <% end %>
-        <% end %>
+        <% if pin.user == current_user %> <!-- check current user loop start-->
+          <br/><%= link_to 'Edit', edit_pin_path(pin) %> |
+          <%= link_to 'Delete', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %> <!-- check current user loop end-->
+
+        <% if pin.for_sale? && user_signed_in? %> <!-- for sale check loop start -->
+            <button id='btn-buy' type='button' class="btn btn-success btn-sm">Buy</button>
+            <%= form_tag charges_path, id:'chargeForm' do %> <!-- chargeForm start -->
+              <script src="https://checkout.stripe.com/checkout.js"></script>
+              <%= hidden_field_tag 'stripeToken' %>
+              <%= hidden_field_tag 'stripeEmail' %>
+              <%= hidden_field_tag 'price', pin.price.to_i %>
+              <!-- <a href="#" id='btn-buy'><strong>Buy This!</strong></a> -->
+                <script>
+                var handler = StripeCheckout.configure({
+                  key: '<%= Rails.configuration.stripe[:publishable_key] %>',
+                  token: function(token, arg) {
+                    document.getElementById("stripeToken").value= token.id;
+                    document.getElementById("stripeEmail").value= token.email;
+                    document.getElementById("chargeForm").submit();
+                  }
+                });
+                document.getElementById('btn-buy').addEventListener('click', function(e){
+                  handler.open({
+                    name: 'Wooden Chair',
+                    description: 'Vintage Wooden Chair' ,
+                    amount: document.getElementById("price").value
+                  });
+                  e.preventDefault();
+                })
+                </script>
+            <% end %>  <!-- chargeForm end -->
+        <% end %>  <!-- for sale check loop start -->
+
       </div>
     </div>
-  <% end %>
+  <% end %> <!-- pins loop end-->
 </div>

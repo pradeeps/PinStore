@@ -13,7 +13,6 @@
         <% if pin.for_sale? && user_signed_in? %> <!-- for sale check loop start -->
             <button id='btn-buy' type='button' class="btn btn-success btn-sm">Buy</button>
             <%= form_tag charges_path, id:'chargeForm' do %> <!-- chargeForm start -->
-              <script src="https://checkout.stripe.com/checkout.js"></script>
               <%= hidden_field_tag 'stripeToken' %>
               <%= hidden_field_tag 'stripeEmail' %>
               <%= hidden_field_tag 'price', pin.price.to_i %>
@@ -29,8 +28,8 @@
                 });
                 document.getElementById('btn-buy').addEventListener('click', function(e){
                   handler.open({
-                    name: 'Wooden Chair',
-                    description: 'Vintage Wooden Chair' ,
+                    name: '<%= pin.description %>',
+                    description: '<%= pin.description %>' ,
                     amount: document.getElementById("price").value
                   });
                   e.preventDefault();

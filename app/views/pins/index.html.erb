@@ -15,6 +15,7 @@
             |  <button id='<%= "btn-buy-" + pin.id.to_s %>' type='button' class="btn btn-success btn-sm">Buy</button>
               <%= hidden_field_tag 'stripeToken' %>
               <%= hidden_field_tag 'stripeEmail' %>
+              <%= hidden_field_tag 'product_id', pin.id %>
               <%= hidden_field_tag 'price', pin.price.to_i %>
               <!-- <a href="#" id='btn-buy'><strong>Buy This!</strong></a> -->
                 <script>
@@ -31,7 +32,8 @@
                     name: '<%= pin.description %>',
                     currency: 'GBP',
                     description: '<%= pin.description %>' ,
-                    amount: '<%= pin.price.to_i %>'
+                    amount: '<%= pin.price.to_i %>',
+                    product_id: '<%= pin.id %>'
                   });
                   e.preventDefault();
                 })

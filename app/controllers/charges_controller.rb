@@ -1,6 +1,5 @@
 class ChargesController < ActionController::Base
 
-
   def create
   customer = Stripe::Customer.create(
     :email => params[:stripeEmail],
@@ -10,8 +9,20 @@ class ChargesController < ActionController::Base
     :customer    => customer.id,
     :amount      => params[:price],
     :description => 'PinStore Stripe customer',
-    :currency    => 'usd'
+    :currency    => 'GBP'
   )
+  purchase = Purchase.create(
+    email: params[:stripeEmail],
+    card: params[:stripeToken],
+    amount: params[:price],
+    description: charge.description,
+    currency: charge.currency,
+    customer_id: customer.id,
+    product_id: params[:product_id]
+  )
+
+  redirect_to purchase
+
   rescue Stripe::CardError => e
   flash[:error] = e.message
   redirect_to charges_path

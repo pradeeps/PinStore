@@ -1,3 +1,27 @@
-<p>this is your purchase</p>
+<div class="container">
+  <p>Thank you for your purchase</p>
+  <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Customer ID</th>
+        <th>Email</th>
+        <th>Description</th>
+        <th>Currency</th>
+        <th>Purchased at</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @purchase.customer_id %></td>
+        <td><%= @purchase.email %></td>
+        <td><%= @purchase.description %></td>
+        <td><%= @purchase.currency.upcase %></td>
+        <td><%= @purchase.created_at %></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
 
-your purchase is <%= @purchase.inspect %>
+  <a href='#'>Back to Store</a> | <a href=#>View all my purchases</a> 
+</div>

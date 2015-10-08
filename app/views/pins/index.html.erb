@@ -11,8 +11,9 @@
           <% end %> <!-- check current user loop end-->
 
         <% if pin.for_sale? && user_signed_in? %> <!-- for sale check loop start -->
+      |  <button id='<%= "btn-buy-" + pin.id.to_s %>' type='button' class="btn btn-success btn-sm">Buy</button>
+
             <%= form_tag charges_path, id:'chargeForm' do %> <!-- chargeForm start -->
-            |  <button id='<%= "btn-buy-" + pin.id.to_s %>' type='button' class="btn btn-success btn-sm">Buy</button>
               <%= hidden_field_tag 'stripeToken' %>
               <%= hidden_field_tag 'stripeEmail' %>
               <%= hidden_field_tag 'product_id', pin.id %>

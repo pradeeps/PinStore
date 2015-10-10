@@ -18,7 +18,8 @@ class ChargesController < ActionController::Base
     description: charge.description,
     currency: charge.currency,
     customer_id: customer.id,
-    product_id: params[:product_id]
+    product_id: params[:product_id],
+    uuid: SecureRandom.uuid.gsub('-','')
   )
 
   redirect_to purchase

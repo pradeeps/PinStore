@@ -8,7 +8,7 @@ class ChargesController < ActionController::Base
   charge = Stripe::Charge.create(
     :customer    => customer.id,
     :amount      => params[:price],
-    :description => 'PinStore Stripe customer',
+    :description => 'Kocher HandbagStore Stripe customer',
     :currency    => 'GBP'
   )
   purchase = Purchase.create(

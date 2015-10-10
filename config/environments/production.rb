@@ -79,6 +79,8 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'https://pin-store.herokuapp.com/'}
 
+  config.action_mailer.perform_deliveries = true
+  
   config.paperclip_defaults = {
     :storage => :s3,
     :s3_credentials => {
